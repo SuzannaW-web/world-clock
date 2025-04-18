@@ -1,13 +1,15 @@
 body {
   background: #b4c8d6;
-  font-family: "Orbitron", sans-serif;
-  margin: 20px auto;
+  font-family: "Share Tech Mono", monospace;
+  margin: 0 auto;
   padding: 2em;
 }
 
 h1 {
+  font-size: 60px;
   font-weight: 700;
   text-align: center;
+  margin: 0;
 }
 
 h2 {
@@ -54,5 +56,6 @@ select {
 }
 
 footer {
+  font-family: sans-serif;
   text-align: center;
 }
