@@ -1,11 +1,11 @@
 function updateTime() {
-  let harareElement = document.querySelector("#harare");
-  let harareDateElement = harareElement.querySelector(".date");
-  let harareTimeElement = harareElement.querySelector(".time");
-  let harareTime = moment().tz("Africa/Harare");
+  let capetownElement = document.querySelector("#cape-town");
+  let capetownDateElement = capetownElement.querySelector(".date");
+  let capetownTimeElement = capetownElement.querySelector(".time");
+  let capetownTime = moment().tz("Africa/Johannesburg");
 
-  harareDateElement.innerHTML = harareTime.format("MMMM Do YYYY");
-  harareTimeElement.innerHTML = harareTime.format(
+  capetownDateElement.innerHTML = capetownTime.format("MMMM Do YYYY");
+  capetownTimeElement.innerHTML = capetownTime.format(
     "h:mm:ss [<small>]A[</small>]"
   );
 
@@ -20,13 +20,33 @@ function updateTime() {
   let vancouverElement = document.querySelector("#vancouver");
   let vancouverDateElement = vancouverElement.querySelector(".date");
   let vancouverTimeElement = vancouverElement.querySelector(".time");
-  let vancouverTime = moment().tz("America/Vancouver;");
+  let vancouverTime = moment().tz("America/Vancouver");
 
   vancouverDateElement.innerHTML = vancouverTime.format("MMMM Do YYYY");
   vancouverTimeElement.innerHTML = vancouverTime.format(
     "h:mm:ss [<small>]A[</small>]"
   );
 }
+function updateCity(event) {
+  let cityTimeZone = event.target.value;
+  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+  let cityTime = moment().tz(cityTimeZone);
+  let citiesElement = document.querySelector("#cities");
+  citiesElement.innerHTML = `
+  <div class="city">
+    <div>
+      <h2>${cityName}</h2>
+      <div class="date">${cityTime.format("MMMM	Do YYYY")}</div>
+    </div>
+    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+    "A"
+  )}</small></div>
+  </div>
+  `;
+}
 
 updateTime();
 setInterval(updateTime, 1000);
+
+let citiesSelectElement = document.querySelector("#city");
+citiesSelectElement.addEventListener("change", updateCity);
