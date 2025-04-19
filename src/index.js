@@ -1,59 +1,62 @@
 function updateTime() {
-  let capetownElement = document.querySelector("#cape-town");
-  let capetownDateElement = capetownElement.querySelector(".date");
-  let capetownTimeElement = capetownElement.querySelector(".time");
-  let capetownTime = moment().tz("Africa/Johannesburg");
+  let newYorkElement = document.querySelector("#new-york");
+  let newYorkDateElement = newYorkElement.querySelector(".date");
+  let newYorkTimeElement = newYorkElement.querySelector(".time");
+  let newYorkTime = moment().tz("America/New_York");
 
-  capetownDateElement.innerHTML = capetownTime.format("MMMM Do YYYY");
-  capetownTimeElement.innerHTML = capetownTime.format(
-    "h:mm:ss [<small>]A[</small>]"
-  );
+  newYorkDateElement.innerHTML = newYorkTime.format("MMMM Do YYYY");
+  newYorkTimeElement.innerHTML = newYorkTime.format("HH:mm:ss");
 
-  let perthElement = document.querySelector("#perth");
-  let perthDateElement = perthElement.querySelector(".date");
-  let perthTimeElement = perthElement.querySelector(".time");
-  let perthTime = moment().tz("Australia/Perth");
+  let londonElement = document.querySelector("#london");
+  let londonDateElement = londonElement.querySelector(".date");
+  let londonTimeElement = londonElement.querySelector(".time");
+  let londonTime = moment().tz("Europe/London");
 
-  perthDateElement.innerHTML = perthTime.format("MMMM Do YYYY");
-  perthTimeElement.innerHTML = perthTime.format("h:mm:ss [<small>]A[</small>]");
+  londonDateElement.innerHTML = londonTime.format("MMMM Do YYYY");
+  londonTimeElement.innerHTML = londonTime.format("HH:mm:ss ");
 
-  let vancouverElement = document.querySelector("#vancouver");
-  let vancouverDateElement = vancouverElement.querySelector(".date");
-  let vancouverTimeElement = vancouverElement.querySelector(".time");
-  let vancouverTime = moment().tz("America/Vancouver");
+  let tokyoElement = document.querySelector("#tokyo");
+  let tokyoDateElement = tokyoElement.querySelector(".date");
+  let tokyoTimeElement = tokyoElement.querySelector(".time");
+  let tokyoTime = moment().tz("Asia/Tokyo");
 
-  vancouverDateElement.innerHTML = vancouverTime.format("MMMM Do YYYY");
-  vancouverTimeElement.innerHTML = vancouverTime.format(
-    "h:mm:ss [<small>]A[</small>]"
-  );
+  tokyoDateElement.innerHTML = tokyoTime.format("MMMM Do YYYY");
+  tokyoTimeElement.innerHTML = tokyoTime.format("HH:mm:ss");
 }
-function updateCity(event) {
-  let cityTimeZone = event.target.value;
+
+function displaySelectedCityTime() {
+  let citySelect = document.querySelector("#city");
+  let cityTimeZone = citySelect.value;
+
   if (cityTimeZone === "current") {
     cityTimeZone = moment.tz.guess();
   }
 
   let cityName = cityTimeZone.replace("_", " ").split("/")[1];
   let cityTime = moment().tz(cityTimeZone);
+
   let citiesElement = document.querySelector("#cities");
   citiesElement.innerHTML = `
-  <div class="selected-city">
-    <div>
-      <h2>${cityName}</h2>
-      <div class="date">${cityTime.format("MMMM	Do YYYY")}</div>
-    </div>
-    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-    "A"
-  )}</small></div>
-  </div>
-  `;
+      <div class="selected-city">
+        <div>
+          <h2>${cityName}</h2>
+          <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+        </div>
+        <div class="time">${cityTime.format("HH:mm:ss")} </div>
+      </div>
+    `;
+}
+
+function updateCity() {
+  renderSelectedCityTime();
 }
 
 updateTime();
 setInterval(updateTime, 1000);
+setInterval(displaySelectedCityTime, 1000);
 
 let citiesSelectElement = document.querySelector("#city");
 citiesSelectElement.addEventListener("change", updateCity);
 
 citiesSelectElement.value = "current";
-updateCity({ target: { value: "current" } });
+displaySelectedCityTime();
